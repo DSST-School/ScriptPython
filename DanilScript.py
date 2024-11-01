@@ -16,3 +16,4 @@ vowels, consonants = count_vowels_consonants(text)
 
 print("Количество гласных:", vowels)
 print("Количество согласных:", consonants)
+
