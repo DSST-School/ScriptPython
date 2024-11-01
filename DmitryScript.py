@@ -1,19 +1,21 @@
 def factorial(n):
+    """Вычисляет факториал числа n."""
     if n < 0:
-        return "Факториал не определен для отрицательных чисел."
+        raise ValueError("Факториал не определен для отрицательных чисел.")
     elif n in (0, 1):
         return 1
-    result = 1
-    for i in range(2, n + 1):
-        result *= i
-    return result
+    return n * factorial(n - 1)
 
 def main():
-    try:
-        n = int(input("Введите число для вычисления факториала: "))
-        print(f"Факториал {n} равен {factorial(n)}")
-    except ValueError:
-        print("Пожалуйста, введите целое число.")
+    while True:
+        try:
+            n = int(input("Введите число для вычисления факториала (или 'q' для выхода): "))
+            print(f"Факториал {n} равен {factorial(n)}")
+        except ValueError as e:
+            print(e)
+        except KeyboardInterrupt:
+            print("\nВыход из программы.")
+            break
 
 if __name__ == "__main__":
     main()
