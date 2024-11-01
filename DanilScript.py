@@ -1,16 +1,10 @@
 def count_vowels_consonants(text):
-    # Определяем гласные
-    vowels = "аеёиоуыэюяАЕЁИОУЫЭЮЯ"
-    vowel_count = 0
-    consonant_count = 0
+    vowels = set("аеёиоуыэюяАЕЁИОУЫЭЮЯ")  # Множество гласных для быстрого поиска
+    text = filter(str.isalpha, text)  # Фильтруем только буквы
 
-    # Перебираем каждый символ
-    for char in text:
-        if char.isalpha():  # Проверяем, является ли символ буквой
-            if char in vowels:
-                vowel_count += 1
-            else:
-                consonant_count += 1
+    # Подсчёт гласных и согласных
+    vowel_count = sum(1 for char in text if char in vowels)
+    consonant_count = sum(1 for char in text if char not in vowels)
 
     return vowel_count, consonant_count
 
