@@ -5,7 +5,8 @@ def generate_password(length, use_uppercase=True, use_lowercase=True, use_digits
     # Проверка наличия хотя бы одного типа символов
     if not (use_uppercase or use_lowercase or use_digits or use_special):
         raise ValueError("Должен быть выбран хотя бы один тип символов.")
-    
+
+    # Собираем доступные символы
     characters = ''
     if use_uppercase:
         characters += string.ascii_uppercase
@@ -16,9 +17,24 @@ def generate_password(length, use_uppercase=True, use_lowercase=True, use_digits
     if use_special:
         characters += string.punctuation
 
-    # Генерируем пароль
-    password = ''.join(random.choice(characters) for _ in range(length))
-    return password
+    # Генерация пароля
+    password = []
+    if use_uppercase:
+        password.append(random.choice(string.ascii_uppercase))
+    if use_lowercase:
+        password.append(random.choice(string.ascii_lowercase))
+    if use_digits:
+        password.append(random.choice(string.digits))
+    if use_special:
+        password.append(random.choice(string.punctuation))
+
+    # Заполняем оставшуюся длину пароля
+    password += random.choices(characters, k=length - len(password))
+    
+    # Перемешиваем пароль, чтобы случайные символы не были в начале
+    random.shuffle(password)
+
+    return ''.join(password)
 
 def main():
     while True:
@@ -36,7 +52,9 @@ def main():
     use_special = input("Использовать специальные символы? (y/n): ").lower() == 'y'
 
     # Генерация и вывод пароля
-    print("Сгенерированный пароль:", generate_password(length, use_uppercase, use_lowercase, use_digits, use_special))
+    password = generate_password(length, use_uppercase, use_lowercase, use_digits, use_special)
+    print("Сгенерированный пароль:", password)
 
 if __name__ == "__main__":
     main()
+
